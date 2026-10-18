@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sirah Tahun 2 – Sejarah Kehidupan Nabi Muhammad S.A.W</title>
+<style>
+:root{--bg:#effcfd;--teal:#5bdfe6;--tl:#b5f0f4;--pink:#ff8591;--pl:#ffd1d4;--vio:#e6a3fc;--org:#ffd9b8;--ink:#12303a}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{text-align:center;padding:18px 10px 4px}
+h1{margin:0;font-size:2rem;letter-spacing:1px;background:linear-gradient(transparent 55%,var(--teal) 55%);display:inline-block;padding:0 14px}
+header p{margin:4px 0 0;font-weight:600}
+nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:10px}
+button{font:inherit;cursor:pointer;border:2px solid var(--ink);background:#fff;color:var(--ink);border-radius:12px;padding:7px 14px;font-weight:700}
+button:hover{background:var(--tl)}button.on{background:var(--ink);color:#fff}button:disabled{opacity:.5;cursor:default}
+button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+main{max-width:960px;margin:auto;padding:8px 16px 60px}
+.box{background:#fff;border-radius:18px;padding:14px 18px;margin:12px 0;box-shadow:0 3px 0 var(--tl)}
+.big{font-size:3rem}.center{text-align:center}.mn{color:#456;font-size:.95rem}
+.row{display:flex;gap:10px;overflow-x:auto;padding:8px 2px}
+.node{flex:0 0 auto;min-width:92px;text-align:center;background:#fff;border:3px solid var(--tl);border-radius:16px;padding:8px;cursor:pointer}
+.node.on{border-color:var(--pink);background:var(--pl);transform:translateY(-4px)}
+.node .e{font-size:1.8rem}.node small{display:block;font-weight:700}
+.bar{height:10px;background:var(--tl);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--pink);transition:width .4s}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.card{background:#fff;border:3px solid var(--tl);border-radius:18px;padding:14px;cursor:pointer;min-height:130px;text-align:center}
+.card:hover{border-color:var(--pink)}.card h3{margin:4px 0}
+.map{position:relative;height:150px;margin:10px 0;background:linear-gradient(#bfeaff,#fff4d6);border-radius:18px;overflow:hidden}
+.map .road{position:absolute;left:8%;right:8%;top:95px;border-top:4px dashed var(--ink)}
+.pin{position:absolute;top:50px;text-align:center;font-weight:700;transform:translateX(-50%)}.pin span{font-size:2.2rem;display:block}
+#camel{position:absolute;top:58px;font-size:2.2rem;transition:left 2s ease-in-out;transform:translateX(-50%) scaleX(-1)}
+.scene{font-size:2.6rem;text-align:center;min-height:80px;padding:10px;background:linear-gradient(#e8f9ff,#fff4e0);border-radius:16px;transition:all .3s}
+.ok{background:#bdf0cf!important}.no{background:#ffc6c0!important}
+.sel{background:var(--vio)!important}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cols button{width:100%;margin:4px 0}
+</style>
+</head>
+<body>
+<header><h1>SIRAH TAHUN 2</h1><p>Sejarah Kehidupan Nabi Muhammad S.A.W 🌙</p></header>
+<nav id="tabs"></nav>
+<main id="view"></main>
+
+<script>
+// ---------- Data from the slides ----------
+const T = [
+ ["Lahir","👶","Selepas kelahiran","Nabi menyusu dengan ibunya, Aminah binti Wahab, beberapa hari sahaja. Kemudian disusukan oleh Suaibatul Aslamiah, hamba Abu Lahab yang dimerdekakan kerana kelahiran baginda."],
+ ["0–4 thn","🐑","Bersama Halimatun Saadiah","Halimah binti Abu Zuaib as Sa'diah menjaga Nabi di perkampungan Bani Saad selama 4 tahun. Rezekinya melimpah ruah."],
+ ["5 thn","💖","Pulang ke pangkuan ibu","Selepas peristiwa dada baginda dibelah oleh Malaikat Jibril (syakkun sodrun) untuk membersihkan hati daripada bisikan syaitan, Halimah memulangkan baginda kepada Aminah di Makkah."],
+ ["5–6 thn","🐪","Ziarah ke Yasrib","Aminah membawa Nabi bersama pengasuh, Ummu Aiman, ke Yasrib menziarahi pusara ayahanda Abdullah dan bapa saudara sebelah ibu (kabilah Bani Najar). Tinggal sebulan. Jarak kira-kira 500 km."],
+ ["6 thn","😢","Aminah wafat","Dalam perjalanan pulang, Aminah jatuh sakit dan wafat. Dikebumikan di Abwa'. Nabi menjadi yatim piatu."],
+ ["6–8 thn","👴","Dijaga datuk","Ummu Aiman menyerahkan Nabi kepada datuknya, Abdul Mutalib, yang menjaga baginda hingga berusia 8 tahun."],
+ ["8 thn →","🧓","Dijaga Abu Talib","Selepas Abdul Mutalib meninggal, bapa saudaranya Abu Talib menjaga Nabi dan sanggup bermusuhan dengan orang lain demi keselamatan baginda."],
+ ["12 thn","🏜️","Ke Syam","Belajar selok-belok berniaga. Rahib Nasrani bernama Buhaira menasihati Abu Talib supaya segera membawa Nabi pulang kerana orang Yahudi akan mengganggu baginda."],
+ ["Remaja","🐐","Mengembala kambing","Untuk meringankan beban Abu Talib. Kambing berkembang biak, gemuk dan sihat. Baginda berfikir tentang penciptaan alam dan menerima upah."],
+ ["25 thn","💼","Berniaga untuk Khadijah","Abu Talib meminta upah 4 ekor unta (biasanya 2). Maisarah kagum dengan senyuman, kesopanan dan kejujuran Nabi. Khadijah tertarik dengan akhlak baginda."],
+ ["Dewasa","🕋","Hajarul Aswad: Al-Amin","Nabi menyelesaikan pertelagahan Quraisy dengan bijaksana. Baginda digelar Al-Amin, 'Yang Dipercayai'."],
+ ["8 Hijrah","🔥","Pembukaan Makkah","10,000 tentera bergerak secara rahsia. Di Marru Zohran, unggun api dihidupkan memanjang supaya Quraisy gerun. Makkah dibuka tanpa pertumpahan darah."]
+];
+const NUR = [
+ ["👩‍🍼","Ibu Tersayang","Aminah binti Wahab menyusukan Nabi beberapa hari selepas kelahiran."],
+ ["🤲","Ibu Susuan Pertama","Suaibatul Aslamiah, hamba Abu Lahab yang dimerdekakan kerana kelahiran baginda. Beberapa hari sahaja."],
+ ["🏕️","Ibu Susuan Kedua","Halimatun Saadiah menjaga Nabi di Bani Saad selama 4 tahun."],
+ ["🏠","Pulang ke Ibunya","Dipulangkan ke Makkah pada umur 5 tahun selepas pembelahan dada oleh Jibril."]
+];
+const WHY = ["Tahu cara hidup orang Arab di desa","Selamat daripada penyakit berjangkit di kota Makkah","Hidup dalam suasana desa yang aman dan tenteram","Fasih bertutur dalam bahasa Arab"];
+const AM = [
+ ["🌊🕋💥","Banjir besar melanda Makkah. Kaabah runtuh dan Hajarul Aswad tercabut. Pembesar Quraisy berpakat membina semula, diketuai Baqum dari Rom."],
+ ["😠⚫😠","Orang Arab bertelagah kerana sesiapa yang meletakkan semula Hajarul Aswad akan dipandang mulia."],
+ ["🚪🧔⭐","Abu Umaiyah bin Al Mughairah mencadangkan orang pertama masuk Masjidil Haram menjadi hakim. Orang itu ialah Nabi Muhammad. Mereka bersorak: “Al-Amin!”"],
+ ["🟫⚫","Nabi meminta sehelai kain, membentangkannya dan meletakkan Hajarul Aswad di tengah-tengahnya."],
+ ["🧔🟫⚫🧔<br>⬆️ ⬆️","Baginda meminta setiap pembesar Quraisy memegang bucu kain dan berjalan ke penjuru Kaabah."],
+ ["🕋⚫✅","Nabi meletakkan Hajarul Aswad di tempat asalnya. Semua pihak puas hati dan tiada pertumpahan darah."]
+];
+// [name, emoji, maksud, contoh, lawan, lawanMaksud]
+const SF = [
+ ["Siddiq","❤️","Benar dan jujur dalam setiap perkataan dan perbuatan.","Sentiasa berkata benar sejak kecil, tidak pernah berbohong walaupun dalam keadaan susah. Menyampaikan wahyu dengan tepat. Digelar Al-Amin.","Kazzab","Berbohong"],
+ ["Amanah","🤝","Dipercayai dan boleh diharap; menjaga kepercayaan dengan penuh tanggungjawab.","Dipercayai menjaga harta dan barang dagangan Quraisy. Khadijah mempercayai baginda menguruskan perniagaan ke Syam.","Khianat","Mengkhianati"],
+ ["Tabligh","📢","Menyampaikan segala ajaran Allah tanpa menyembunyikan walau sedikit pun.","Menyampaikan wahyu kepada seluruh manusia dengan sabar walaupun ditentang dan diancam Quraisy.","Kitman","Menyembunyikan"],
+ ["Fathonah","💡","Bijaksana dan cerdas akal.","Menyelesaikan pertelagahan Hajarul Aswad dengan kain. Strategi unggun api di Marru Zohran membuka Makkah tanpa pertumpahan darah.","Baladah","Bodoh"]
+];
+const Q = [
+ ["Siapakah ibu susuan Nabi yang kedua?",["Suaibatul Aslamiah","Halimatun Saadiah","Ummu Aiman"],1],
+ ["Berapa lama Nabi tinggal di Bani Saad?",["2 tahun","4 tahun","6 tahun"],1],
+ ["Nabi menjadi yatim piatu pada umur…",["6 tahun","8 tahun","12 tahun"],0],
+ ["Aminah dikebumikan di…",["Yasrib","Syam","Abwa'"],2],
+ ["Siapa menjaga Nabi dari umur 6 hingga 8 tahun?",["Abdul Mutalib","Abu Talib","Baqum"],0],
+ ["Al-Amin bermaksud…",["Yang Bijaksana","Yang Dipercayai","Yang Menyampaikan"],1],
+ ["Siapa mencadangkan orang pertama masuk Masjidil Haram menjadi hakim?",["Abu Umaiyah bin Al Mughairah","Maisarah","Buhaira"],0],
+ ["Abu Talib meminta Khadijah memberi upah berapa ekor unta?",["2 ekor","3 ekor","4 ekor"],2],
+ ["Lawan bagi sifat Siddiq ialah…",["Khianat","Kazzab","Kitman"],1],
+ ["Strategi Nabi di Marru Zohran ialah…",["Menghidupkan unggun api memanjang","Menyerang waktu malam","Membina kubu"],0]
+];
+const TABS=[["tl","⏳ Garis Masa"],["map","🗺️ Peta"],["sus","🍼 Penyusuan"],["amin","🕋 Al-Amin"],["sifat","⭐ Sifat Nabi"],["quiz","📝 Kuiz"]];
+const S={tab:"tl",i:0,leg:0,lang:0,am:0,sf:{},pick:null,done:{},quiz:{},hal:0,flip:{}};
+const $=s=>document.querySelector(s);
+const add=(v,h)=>v.insertAdjacentHTML("beforeend",h);
+const btn=(t,on,f)=>{const b=document.createElement("button");b.innerHTML=t;if(on)b.className="on";b.onclick=f;return b};
+
+function render(){
+  $("#tabs").innerHTML="";TABS.forEach(([k,l])=>$("#tabs").append(btn(l,S.tab===k,()=>{S.tab=k;render()})));
+  const v=$("#view");v.innerHTML="";
+  ({tl:timeline,map:mapv,sus:sus,amin:amin,sifat:sifat,quiz:quiz})[S.tab](v);
+}
+// ---- Timeline
+function timeline(v){
+  const n=T[S.i];
+  add(v,`<div class="bar"><i style="width:${(S.i+1)/T.length*100}%"></i></div><div class="row" id="row"></div>`);
+  T.forEach((t,i)=>{const d=document.createElement("div");d.className="node"+(i===S.i?" on":"");d.tabIndex=0;
+    d.innerHTML=`<div class="e">${t[1]}</div><small>${t[0]}</small>`;d.onclick=()=>{S.i=i;render()};d.onkeydown=e=>{if(e.key==="Enter"){S.i=i;render()}};$("#row").append(d)});
+  add(v,`<div class="box center"><div class="big">${n[1]}</div><h2>${n[2]}</h2><p><b>${n[0]}</b></p><p>${n[3]}</p></div>`);
+  const nv=document.createElement("div");nv.className="center";
+  const p=btn("◀ Sebelum",false,()=>{S.i--;render()}),x=btn("Seterusnya ▶",false,()=>{S.i++;render()});
+  p.disabled=S.i===0;x.disabled=S.i===T.length-1;nv.append(p," ",x);v.append(nv);
+}
+// ---- Map
+const STOPS=[8,50,92],MSG=["Makkah → Yasrib (±500 km). Aminah, Nabi dan Ummu Aiman menziarahi pusara Abdullah dan keluarga Bani Najar.","Sebulan di Yasrib, mereka pulang. Di tengah jalan, Aminah jatuh sakit dan wafat. Dikebumikan di Abwa'. Nabi menjadi yatim piatu pada umur 6 tahun.","Ummu Aiman membawa Nabi pulang ke Makkah dan menyerahkannya kepada datuknya, Abdul Mutalib."];
+function mapv(v){
+  add(v,`<div class="box"><b>Perjalanan Nabi bersama ibunya.</b> Tekan butang untuk menggerakkan unta.<div class="map"><div class="road"></div>
+  <div class="pin" style="left:8%"><span>🕋</span>MAKKAH</div><div class="pin" style="left:50%"><span>🪦</span>ABWA'</div><div class="pin" style="left:92%"><span>🕌</span>YASRIB / MADINAH</div>
+  <div id="camel" style="left:${STOPS[S.leg===0?0:S.leg===1?2:S.leg===2?1:0]}%">🐪</div></div><p id="cap" class="center"><b>${S.leg?MSG[S.leg-1]:"Tekan “Mulakan” untuk bermula dari Makkah."}</b></p></div>`);
+  const lab=["▶ Mulakan: ke Yasrib","↩ Pulang dari Yasrib","➡ Teruskan ke Makkah","🔄 Ulang"];
+  const b=btn(lab[S.leg],false,()=>{
+    const to=[2,1,0,0][S.leg];S.leg=(S.leg+1)%4;
+    $("#camel").style.left=STOPS[S.leg===0?0:S.leg===1?2:S.leg===2?1:0]+"%";
+    $("#camel").style.transform="translateX(-50%) scaleX("+(S.leg===1?-1:S.leg===2?1:-1)+")";
+    $("#cap").innerHTML="<b>"+(S.leg?MSG[S.leg-1]:"Selamat kembali! Tekan Mulakan untuk ulang.")+"</b>";b.textContent=lab[S.leg]});
+  const w=document.createElement("div");w.className="center";w.append(b);v.append(w);
+  add(v,`<div class="box"><b>Siapa dijaga siapa?</b><div class="grid" style="margin-top:8px"><div class="card">👴<h3>Abdul Mutalib</h3>datuk, umur 6–8 tahun</div><div class="card">🧓<h3>Abu Talib</h3>bapa saudara, selama 42 tahun</div></div></div>`);
+}
+// ---- Penyusuan
+function sus(v){
+  add(v,`<h2>Empat peringkat penyusuan</h2><div class="grid" id="g"></div>`);
+  NUR.forEach((n,i)=>{const d=document.createElement("div");d.className="card";d.tabIndex=0;
+    const show=()=>d.innerHTML=S.flip["n"+i]?`<p>${n[2]}</p>`:`<div class="big">${n[0]}</div><h3>${i+1}. ${n[1]}</h3><span class="mn">tekan untuk baca</span>`;
+    show();d.onclick=()=>{S.flip["n"+i]=!S.flip["n"+i];show()};d.onkeydown=e=>{if(e.key==="Enter")d.onclick()};$("#g").append(d)});
+  add(v,`<div class="box"><h3>Mengapa Nabi dihantar kepada ibu susuan?</h3><div class="grid">${WHY.map((w,i)=>`<div class="card" style="min-height:auto">${["🌾","🛡️","🌿","🗣️"][i]}<br>${w}</div>`).join("")}</div></div>
+  <div class="box center"><h3>Kehidupan Halimatun: sebelum &amp; selepas menjaga Nabi</h3><div class="scene">${S.hal?"🌱🐑🐑🐑🥛🥛<br>🍚 Rezeki melimpah ruah":"🥀🐐<br>😞 Miskin dan kelaparan"}</div><p>${S.hal?"Haiwan ternakan mengeluarkan susu yang banyak dan tanamannya subur.":"Hidup sederhana dan miskin; ternakan kurang menjadi dan kurang susu."}</p></div>`);
+  const c=document.createElement("div");c.className="center";c.append(btn("Sebelum",!S.hal,()=>{S.hal=0;render()})," ",btn("Selepas",S.hal,()=>{S.hal=1;render()}));v.append(c);
+}
+// ---- Al-Amin
+function amin(v){
+  const a=AM[S.am];
+  add(v,`<div class="box"><b>Peristiwa Hajarul Aswad</b> (langkah ${S.am+1}/${AM.length})<div class="scene">${a[0]}</div><p>${a[1]}</p></div>`);
+  const p=btn("◀",false,()=>{S.am--;render()}),n=btn("Langkah seterusnya ▶",false,()=>{S.am++;render()});
+  p.disabled=S.am===0;n.disabled=S.am===AM.length-1;const w=document.createElement("div");w.className="center";w.append(p," ",n);v.append(w);
+  add(v,`<div class="box center"><div class="big">🛡️</div><b>Al-Amin = “Yang Dipercayai”</b><p class="mn">Gelaran daripada Quraisy kerana kejujuran dan kebijaksanaan Nabi.</p></div>`);
+}
+// ---- Sifat
+function sifat(v){
+  add(v,`<h2>Sifat wajib (tekan kad) dan lawannya (mustahil)</h2><div class="grid" id="g"></div>`);
+  SF.forEach((s,i)=>{const d=document.createElement("div");d.className="card";d.tabIndex=0;
+    d.innerHTML=S.sf[i]?`<h3>${s[1]} ${s[0]}</h3><p><b>Maksud:</b> ${s[2]}</p><p class="mn"><b>Contoh:</b> ${s[3]}</p><p>❌ Lawan: <b>${s[4]}</b> (${s[5]})</p>`:`<div class="big">${s[1]}</div><h3>${s[0]}</h3><span class="mn">tekan untuk buka</span>`;
+    d.onclick=()=>{S.sf[i]=!S.sf[i];render()};d.onkeydown=e=>{if(e.key==="Enter")d.onclick()};$("#g").append(d)});
+  const L=[0,1,2,3],R=[2,0,3,1];
+  add(v,`<div class="box"><h3>🎮 Padankan sifat dengan lawannya</h3><div class="cols"><div id="l"></div><div id="r"></div></div><p class="center"><b>${Object.keys(S.done).length===4?"🎉 Hebat! Semua betul!":"Pilih satu sifat, kemudian lawannya."}</b></p></div>`);
+  L.forEach(i=>{const b=btn(SF[i][1]+" "+SF[i][0],false,()=>{S.pick=i;render()});if(S.done[i])b.classList.add("ok");else if(S.pick===i)b.classList.add("sel");$("#l").append(b)});
+  R.forEach(i=>{const b=btn(SF[i][4]+" ("+SF[i][5]+")",false,()=>{
+    if(S.pick===null||S.done[i])return;
+    if(S.pick===i){S.done[i]=1;S.pick=null;render()}else{b.classList.add("no");setTimeout(()=>b.classList.remove("no"),600)}});
+    if(S.done[i])b.classList.add("ok");$("#r").append(b)});
+}
+// ---- Quiz
+function quiz(v){
+  Q.forEach(([q,o,c],i)=>{
+    const box=document.createElement("div");box.className="box";box.innerHTML=`<p><b>${i+1}. ${q}</b></p>`;
+    const r=document.createElement("div");r.className="opts";
+    o.forEach((t,j)=>{const b=btn(t,false,()=>{if(S.quiz[i]===undefined){S.quiz[i]=j;render()}});
+      if(S.quiz[i]!==undefined){b.disabled=true;if(j===c)b.classList.add("ok");else if(j===S.quiz[i])b.classList.add("no")}r.append(b)});
+    box.append(r);v.append(box)});
+  const sc=Q.filter((x,i)=>S.quiz[i]===x[2]).length,fin=Object.keys(S.quiz).length===Q.length;
+  add(v,`<div class="box center"><div class="big">${fin?(sc>=8?"🏆":sc>=5?"👍":"📚"):"⭐"}</div><h2>Markah: ${sc} / ${Q.length}</h2>${fin?`<p>${sc>=8?"Syabas! Anda sangat bagus!":"Cuba ulang baca garis masa dan cuba lagi."}</p>`:""}</div>`);
+  const r=btn("🔄 Cuba lagi",false,()=>{S.quiz={};render()});const w=document.createElement("div");w.className="center";w.append(r);v.append(w);
+}
+render();
+</script>
+</body>
+</html>
