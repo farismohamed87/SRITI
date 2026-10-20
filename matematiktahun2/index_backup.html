@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matematik Tahun 2 – Nota Interaktif</title>
+<style>
+:root{--navy:#1c3f77;--yel:#ffd21a;--yl:#fff0a8;--grn:#e4ffc4;--pur:#f6e3ff;--bg:#f4f8ff}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--navy);line-height:1.5}
+header{background:var(--navy);color:#fff;text-align:center;padding:14px 10px;border-bottom:6px solid var(--yel)}
+h1{margin:0;font-size:1.7rem}header p{margin:2px 0 0}
+nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:10px}
+button{font:inherit;cursor:pointer;border:2px solid var(--navy);background:#fff;color:var(--navy);border-radius:12px;padding:6px 13px;font-weight:700}
+button:hover{background:var(--yl)}button.on{background:var(--navy);color:#fff}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ff7a00;outline-offset:2px}
+main{max-width:900px;margin:auto;padding:6px 14px 60px}
+.box{background:#fff;border:3px solid var(--navy);border-radius:16px;padding:12px 16px;margin:12px 0}
+.y{background:var(--yl)}.g{background:var(--grn)}.p{background:var(--pur)}
+h2{margin:14px 0 4px}.c{text-align:center}.big{font-size:2rem;font-weight:800}
+input,select{font:inherit;font-weight:700;color:var(--navy);padding:5px 8px;border:2px solid var(--navy);border-radius:10px;width:90px;text-align:center}
+table{border-collapse:collapse;margin:8px auto}td,th{border:3px solid var(--navy);padding:6px 14px;text-align:center;font-weight:700}
+th{background:var(--yel)}.hl{background:#ffb199}.sm{background:#c9f5c9}
+.chip{display:inline-block;min-width:64px;margin:4px;padding:8px 10px;border:2px solid var(--navy);border-radius:12px;background:var(--pur);font-weight:800}
+.chip.in{background:#fff}.chip input{width:70px}.pick{background:#d4ffd0}
+.bx{border:3px solid var(--navy);padding:0 6px;border-radius:4px}
+.mono{font-family:Consolas,monospace;text-align:left;display:inline-block}
+.cell{display:inline-block;width:70px;height:70px;border:3px solid var(--navy);margin:2px;cursor:pointer;background:#fff;vertical-align:top}
+.cell.on{background:var(--yel)}
+.grp{display:inline-block;border:2px dashed var(--navy);border-radius:10px;padding:2px 6px;margin:4px;font-size:1.3rem}
+.ok{background:#bdf0cf!important}.no{background:#ffc6c0!important}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<header><h1>NOTA MATEMATIK TAHUN 2</h1><p>Nota interaktif · Disediakan oleh Ustazah Hidayah</p></header>
+<nav id="tabs"></nav>
+<main id="view"></main>
+
+<script>
+const $=s=>document.querySelector(s),H=(v,h)=>v.insertAdjacentHTML("beforeend",h);
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),sh=a=>a.sort(()=>Math.random()-.5);
+const TABS=[["nombor","🔢 Nombor"],["banding","⚖️ Banding & Susun"],["pola","🔁 Pola & Bilang"],["bundar","🎯 Bundar"],["tt","➕ Tambah/Tolak"],["db","✖️ Darab/Bahagi"],["pec","🍕 Pecahan"],["wang","💰 Wang"],["kuiz","📝 Kuiz"]];
+let tab="nombor";
+function btn(t,on,f){const b=document.createElement("button");b.innerHTML=t;if(on)b.className="on";b.onclick=f;return b}
+function render(){const n=$("#tabs");n.innerHTML="";TABS.forEach(([k,l])=>n.append(btn(l,tab===k,()=>{tab=k;render()})));
+  const v=$("#view");v.innerHTML="";({nombor,banding,pola,bundar,tt,db,pec,wang,kuiz})[tab](v)}
+const num=(id,lo,hi)=>Math.max(lo,Math.min(hi,Math.round(+$(id).value||0)));
+
+// ---------- Nombor ----------
+function nombor(v){
+  H(v,`<h2>Kenali nombor, nilai tempat &amp; nilai digit</h2><div class="box c">Taip nombor (0–999): <input id="n" type="number" value="203" oninput="nb()"><div id="no"></div></div>`);nb()}
+function nb(){const n=num("#n",0,999),r=n/100|0,p=(n/10|0)%10,s=n%10;
+  $("#no").innerHTML=`<table><tr><th>Digit</th><td>${r}</td><td>${p}</td><td>${s}</td></tr><tr><th>Nilai Tempat</th><td>Ratus</td><td>Puluh</td><td>Sa</td></tr><tr><th>Nilai Digit</th><td>${r*100}</td><td>${p*10}</td><td>${s}</td></tr></table>
+  <p>Cerakin nilai tempat: <b>${r} Ratus + ${p} Puluh + ${s} Sa</b><br>Cerakin nilai digit: <b>${r*100} + ${p*10} + ${s}</b></p>
+  <div style="font-size:1.6rem">${"🟥".repeat(r)} ${"🟨".repeat(p)} ${"🟩".repeat(s)}</div><small>🟥 = 100 &nbsp; 🟨 = 10 &nbsp; 🟩 = 1</small>`}
+
+// ---------- Banding & Susun ----------
+let SG={};
+function banding(v){
+  H(v,`<h2>Banding nombor</h2><div class="box y">Bandingkan dari hadapan: Ratus dahulu. Jika sama, tengok Puluh, kemudian Sa.</div>
+  <div class="box c"><input id="a" type="number" value="340" oninput="bd()"> dengan <input id="b" type="number" value="345" oninput="bd()"><div id="bo"></div></div>
+  <h2>Susun nombor</h2><div class="box c" id="sg"></div>`);bd();ns()}
+function bd(){const a=num("#a",0,999),b=num("#b",0,999),A=String(a).padStart(3,"0"),B=String(b).padStart(3,"0"),L=["Ratus","Puluh","Sa"];
+  let k=[...A].findIndex((d,i)=>d!==B[i]);
+  const row=(S)=>[...S].map((d,i)=>`<td class="${i===k?"hl":i<k||k<0?"sm":""}">${d}</td>`).join("");
+  $("#bo").innerHTML=`<table><tr>${L.map(x=>`<th>${x}</th>`).join("")}</tr><tr>${row(A)}</tr><tr>${row(B)}</tr></table>`+
+  (k<0?`<b>${a} sama dengan ${b}</b>`:`<p>${k?"Tempat "+L.slice(0,k).join(" dan ")+" sama, tengok sebelah pula. ":""}Tempat ${L[k]} tidak sama: ${A[k]} dan ${B[k]}.</p><b>${a<b?a+" lebih kecil daripada "+b:a+" lebih besar daripada "+b}</b>`)}
+function ns(){SG={arr:[...new Set(Array.from({length:5},()=>R(1,9)*50))],sel:[],asc:R(0,1)};while(SG.arr.length<5)SG.arr.push(R(1,18)*50+7*SG.arr.length);sg()}
+function sg(){const t=SG.asc?"menaik (kecil → besar)":"menurun (besar → kecil)",ans=[...SG.arr].sort((a,b)=>SG.asc?a-b:b-a),done=SG.sel.length===5;
+  $("#sg").innerHTML=`<b>Susun secara tertib ${t}. Tekan nombor mengikut susunan.</b><br>`;
+  SG.arr.forEach(n=>{const b=btn(n,SG.sel.includes(n),()=>{if(!SG.sel.includes(n)){SG.sel.push(n);sg()}});b.className="chip"+(SG.sel.includes(n)?" pick":"");$("#sg").append(b)});
+  H($("#sg"),`<p>Jawapan anda: <b>${SG.sel.join(" , ")||"…"}</b></p>${done?`<b>${SG.sel.join()===ans.join()?"✅ Betul!":"❌ Cuba lagi. Jawapan: "+ans.join(" , ")}</b>`:""}<br>`);
+  $("#sg").append(btn("Ulang",false,()=>{SG.sel=[];sg()})," ",btn("Soalan baharu",false,ns))}
+
+// ---------- Pola & Bilang ----------
+let P;
+function pola(v){
+  H(v,`<h2>Bilang &amp; pola nombor</h2><div class="box g"><b>Menaik = tambah</b> &nbsp;|&nbsp; <b>Menurun = tolak</b><br>Cari beza: nombor besar tolak nombor kecil (sebelah-sebelah). Nombor makin besar = menaik; makin kecil = menurun.</div><div class="box c" id="pl"></div>`);np()}
+function np(){const d=R(0,1),st=[2,5,10,11,15,30,50,100][R(0,7)],s=d?R(1,4)*st+R(0,3)*st:R(200,600);let b=[R(1,3)];b.push(b[0]===3?R(0,1):R(b[0]+1,4));P={d,st,s,b,seq:Array.from({length:5},(_,i)=>s+(d?1:-1)*st*i),res:null};pl()}
+function pl(){const e=$("#pl");e.innerHTML=`<b>Pola nombor ${P.d?"menaik":"menurun"} … apakah yang hilang?</b><br>`;
+  P.seq.forEach((n,i)=>H(e,P.b.includes(i)?`<span class="chip in"><input id="p${i}" type="number"></span>`:`<span class="chip">${n}</span>`));
+  H(e,`<p>${P.res===null?"":P.res?`✅ Betul! ${P.d?"Menaik":"Menurun"} ${P.st}-${P.st} = ${P.d?"tambah":"tolak"} ${P.st} setiap nombor`:`❌ Cuba lagi. Beza = ${P.st}`}</p>`);
+  e.append(btn("Semak",false,()=>{P.res=P.b.every(i=>+$("#p"+i).value===P.seq[i]);pl()})," ",btn("Soalan baharu",false,np))}
+
+// ---------- Bundar ----------
+function bundar(v){
+  H(v,`<h2>Bundar nombor</h2><div class="box y"><b>0 – 4 = Kekalkan &amp; letak “0”</b><br><b>5 – 9 = Tambah “1” &amp; letak “0”</b></div>
+  <div class="box c">Nombor (100–999): <input id="n" type="number" value="407" oninput="bu()"> kepada <select id="lv" onchange="bu()" style="width:140px"><option value="10">puluh terdekat</option><option value="100">ratus terdekat</option></select><div id="bo"></div></div>`);bu()}
+function bu(){const n=num("#n",100,999),L=+$("#lv").value,[h,t,u]=String(n).split("").map(Number);
+  const dg=L===10?`${h}<span class="bx"><u>${t}</u> ${u}</span>`:`<span class="bx"><u>${h}</u> ${t}</span> ${u}`,key=L===10?u:t,name=L===10?"sa":"puluh",up=key>=5,r=(Math.floor(n/L)+(up?1:0))*L;
+  $("#bo").innerHTML=`<p class="big">${dg}</p><p>Gariskan digit ${L===10?"puluh":"ratus"}, petakkan dengan digit belakangnya. Digit ${name} = <b>${key}</b>.<br>${key} berada dalam <b>${up?"5 hingga 9":"0 hingga 4"}</b>, jadi: <b>${up?"Tambah “1” & letak “0”":"Kekalkan & letak “0”"}</b>.</p><div class="big">Jawapan = ${r}</div>`}
+
+// ---------- Tambah / Tolak ----------
+let TT;
+function tt(v){
+  H(v,`<h2>Tambah &amp; tolak: cari nombor yang hilang</h2><div class="box y"><b>Tip:</b> jumlah keseluruhan tolak dengan nombor dalam, akan dapat nombor dalam yang hilang.</div><div class="box c" id="tq"></div>
+  <h2>Tambah &amp; tolak berturut-turut</h2><div class="box c"><input id="x" type="number" value="470"> <select id="o1" style="width:55px"><option>+</option><option>−</option></select> <input id="y" type="number" value="200"> <select id="o2" style="width:55px"><option>+</option><option>−</option></select> <input id="z" type="number" value="10"> <button onclick="tc()">Kira</button><div id="tr"></div></div>`);nt();tc()}
+function nt(){const t=R(0,3);let a=R(100,500),b=R(50,400),c,f,w;
+  if(t===0){c=a+b;f=`${a} + ▢ = ${c}`;w=b;TT.h=`${c} − ${a} = ${b}`}
+  if(t===1){c=a+b;f=`▢ + ${b} = ${c}`;w=a;TT.h=`${c} − ${b} = ${a}`}
+  if(t===2){a+=b;c=a-b;f=`${a} − ▢ = ${c}`;w=b;TT.h=`${a} − ${c} = ${b}`}
+  if(t===3){c=a;a=c+b;f=`▢ − ${b} = ${c}`;w=a;TT.h=`${c} + ${b} = ${a}`}
+  TT.f=f;TT.w=w;TT.r=null;tqr()}
+TT={};
+function tqr(){const e=$("#tq");e.innerHTML=`<p class="big">${TT.f}</p><input id="ta" type="number"> `;
+  e.append(btn("Semak",false,()=>{TT.r=+$("#ta").value===TT.w;tqr();$("#ta").value=TT.r?TT.w:""}),btn("Soalan baharu",false,nt));
+  H(e,`<p>${TT.r===null?"":TT.r?"✅ Betul! "+TT.h+" = "+TT.w:"❌ Cuba lagi. Petunjuk: "+TT.h}</p>`)}
+function tc(){const x=num("#x",0,999),y=num("#y",0,999),z=num("#z",0,999),s=o=>o==="+"?1:-1,o1=$("#o1").value,o2=$("#o2").value,m=x+s(o1)*y,r=m+s(o2)*z;
+  $("#tr").innerHTML=`<p class="mono">${x}<br>${o1} ${y}<br>= ${m}<br>${o2} ${z}<br>= <b>${r}</b></p>`}
+
+// ---------- Darab / Bahagi ----------
+function db(v){
+  H(v,`<h2>Darab: kumpulan sama banyak</h2><div class="box c"><input id="g" type="number" value="2" oninput="dr()"> kumpulan, setiap kumpulan <input id="e" type="number" value="5" oninput="dr()"><div id="da"></div></div>
+  <h2>Bahagi: langkah demi langkah</h2><div class="box c"><input id="dv" type="number" value="628" oninput="lg()" style="width:100px"> ÷ <input id="ds" type="number" value="4" oninput="lg()" style="width:60px"><div id="dd"></div></div>`);dr();lg()}
+function dr(){const g=num("#g",1,10),e=num("#e",1,10),sg=Array(g).fill(e).join(" + ");
+  $("#da").innerHTML=`<div>${Array.from({length:g},()=>`<span class="grp">${"🔵".repeat(e)}</span>`).join("")}</div><p>${g} kumpulan ${e}-${e}: ${sg} = <b>${g*e}</b><br>${g} × ${e} = ${g*e}</p><p><b>${g} × ${e} sama dengan ${e} × ${g}</b> (${Array(e).fill(g).join(" + ")} = ${g*e})</p>`}
+function lg(){const n=num("#dv",1,9999),d=num("#ds",1,9);let rem=0,q="",L=[];String(n).split("").forEach(x=>{const cur=rem*10+ +x,k=cur/d|0;rem=cur%d;q+=k;L.push(`${cur} ÷ ${d} = ${k}, baki ${rem}`)});
+  $("#dd").innerHTML=`<p class="mono">${L.join("<br>")}</p><p class="big">${n} ÷ ${d} = ${+q}${rem?" baki "+rem:""}</p><p>Semak: ${+q} × ${d}${rem?" + "+rem:""} = ${n}</p>`}
+
+// ---------- Pecahan ----------
+let F={d:4,s:new Set([0]),c:null};
+function pec(v){
+  H(v,`<h2>Kenali pecahan</h2><div class="box c">Penyebut: <select id="fd" onchange="F.d=+this.value;F.s=new Set();pf()"></select><div id="pf"></div></div>
+  <h2>Banding pecahan</h2><div class="box c" id="pb"></div><h2>Pecahan → perpuluhan</h2><div class="box c">Pecahan <input id="pn" type="number" value="12" style="width:70px" oninput="pp()"> / 10<div id="pp"></div></div>
+  <h2>Banding perpuluhan</h2><div class="box c"><input id="d1" type="number" step="0.1" value="0.8" oninput="pq()"> dengan <input id="d2" type="number" step="0.1" value="0.5" oninput="pq()"><div id="pq"></div></div>`);
+  [2,3,4,5,8,10].forEach(x=>$("#fd").insertAdjacentHTML("beforeend",`<option ${x===F.d?"selected":""}>${x}</option>`));pf();npb();pp();pq()}
+function pf(){const e=$("#pf");e.innerHTML=Array.from({length:F.d},(_,i)=>`<span class="cell${F.s.has(i)?" on":""}" onclick="F.s.has(${i})?F.s.delete(${i}):F.s.add(${i});pf()" style="width:${Math.min(70,300/F.d)}px"></span>`).join("")+
+  `<p>Tekan petak untuk warnakan.</p><table style="margin:auto"><tr><td style="color:#2e8b00;border:0">${F.s.size}</td><td style="border:0;text-align:left">← pengangka</td></tr><tr><td style="border:0;border-top:3px solid">${F.d}</td><td style="border:0;text-align:left">← penyebut</td></tr></table><p>Dalam perkataan: <b>${F.s.size} per ${["","satu","dua","tiga","empat","lima","enam","tujuh","lapan","sembilan","sepuluh"][F.d]}</b></p>`}
+function npb(){const d=R(3,10);let a=R(1,d-1),b=R(1,d-1);while(a===b)b=R(1,d-1);F.q={a,b,d,big:R(0,1)};pb()}
+function pb(){const{a,b,d,big}=F.q,e=$("#pb");e.innerHTML=`<b>Manakah yang ${big?"lebih besar":"kurang"}? (bandingkan pengangka sahaja)</b><br>`;
+  [a,b].forEach(x=>e.append(Object.assign(btn(`${x}/${d}`,false,()=>{const ok=big?x===Math.max(a,b):x===Math.min(a,b);F.c=ok;pb()}),{className:"chip"})));
+  H(e,`<p>${F.c===null?"":F.c?"✅ Betul!":"❌ Cuba lagi."}</p>`);e.append(btn("Soalan baharu",false,()=>{F.c=null;npb()}))}
+function pp(){const n=num("#pn",0,999),s=String(n),w=n<10?"0."+s:s.slice(0,-1)+"."+s.slice(-1);$("#pp").innerHTML=`<p class="big">${n}/10 = ${w}</p><p>Ada 1 sifar, gerak titik 1 kali dari belakang ke hadapan${n<10?", letak 0 di hadapan titik":""}.</p>`}
+function pq(){const a=+$("#d1").value,b=+$("#d2").value;$("#pq").innerHTML=`<p><b>${a===b?"Sama":a+" lebih "+(a<b?"kecil":"besar")+" daripada "+b}</b><br>${Math.round(a*10)} dan ${Math.round(b*10)} (selepas titik): ${a===b?"sama":Math.round(a*10)<Math.round(b*10)?"lebih kecil":"lebih besar"}</p>`}
+
+// ---------- Wang ----------
+function wang(v){
+  H(v,`<h2>Wang: tambah, tolak, darab, bahagi</h2><div class="box c">RM <input id="w1" type="number" step="0.05" value="20.50" style="width:110px" oninput="wk()"> <select id="wo" onchange="wk()" style="width:60px"><option>+</option><option>−</option><option>×</option><option>÷</option></select> <span id="wl">RM</span> <input id="w2" type="number" step="0.05" value="12.10" style="width:110px" oninput="wk()"><div id="wr"></div></div>
+  <div class="box y"><b>Tip:</b> RM20.50 = Dua puluh ringgit lima puluh sen. Sejajarkan titik perpuluhan semasa menambah atau menolak.</div>`);wk()}
+function wk(){const o=$("#wo").value,a=Math.round(+$("#w1").value*100),b=Math.round(+$("#w2").value*100);$("#wl").textContent=o==="×"||o==="÷"?"":"RM";
+  const f=c=>"RM"+(c/100).toFixed(2),b2=o==="×"||o==="÷"?+$("#w2").value:f(b);
+  const r=o==="+"?a+b:o==="−"?a-b:o==="×"?Math.round(a*(+$("#w2").value)):Math.round(a/(+$("#w2").value||1));
+  $("#wr").innerHTML=`<p class="mono">${f(a)}<br>${o} ${b2}<br>= <b>${f(r)}</b></p>`}
+
+// ---------- Kuiz ----------
+let QZ=[],PK={};
+function mk(q,ans,fmt=x=>x,u=1){const s=new Set([ans]);while(s.size<3){const w=ans+R(-5,5)*u;if(w>=0&&w!==ans)s.add(w)}const o=sh([...s]);return{q,o:o.map(fmt),c:o.indexOf(ans)}}
+const TX=(q,ans,w)=>{const o=sh([ans,...w]);return{q,o,c:o.indexOf(ans)}};
+const RM=c=>"RM"+(c/100).toFixed(2),rd=(n,L)=>Math.floor(n/L+(n%L>=L/2?1:0))*L;
+const bk=big=>{const a=R(100,900),b=a+R(1,9)*(R(0,1)?1:10);return TX(`Yang manakah lebih ${big?"besar":"kecil"}, ${a} atau ${b}?`,big?b:a,[big?a:b])};
+const G={
+ nv(){const d=sh([1,2,3,4,5,6,7,8,9]),[r,p,s]=d;return mk(`Apakah nilai digit ${p} dalam nombor ${r*100+p*10+s}?`,p*10,x=>x,10)},
+ cr(){const d=sh([1,2,3,4,5,6,7,8,9]),[r,p,s]=d;return TX(`Cerakinkan nilai digit bagi ${r*100+p*10+s}.`,`${r*100} + ${p*10} + ${s}`,[`${p*100} + ${r*10} + ${s}`,`${r} + ${p} + ${s}`])},
+ bk:()=>bk(0),bs:()=>bk(1),
+ ss(){const a=[...new Set(Array.from({length:4},()=>R(1,19)*50))],up=R(0,1);if(a.length<3)a.push(975,25);const u=[...a].sort((x,y)=>x-y),ans=(up?u:[...u].reverse()).join(", "),w=[(up?[...u].reverse():u).join(", ")];
+  let t;do{t=sh([...a]).join(", ")}while(t===ans||t===w[0]);w.push(t);return TX(`Susun nombor ${a.join(", ")} secara ${up?"menaik":"menurun"}.`,ans,w)},
+ pl(){const st=[2,5,10,11,15,30,50][R(0,6)],s=R(1,5)*st;return mk(`Pola menaik: ${[0,1,2,3].map(i=>s+st*i).join(", ")}, ▢ . Nombor seterusnya?`,s+st*4,x=>x,st)},
+ pm(){const st=[2,5,7,15,30,60][R(0,5)],s=R(10,15)*st;return mk(`Pola menurun: ${[0,1,2,3].map(i=>s-st*i).join(", ")}, ▢ . Nombor seterusnya?`,s-st*4,x=>x,st)},
+ pb(){const st=[2,5,10,11,20][R(0,4)],up=R(0,1),s=up?R(1,4)*st:R(8,12)*st,sq=[0,1,2,3,4].map(i=>s+(up?1:-1)*st*i),lab=(d,k)=>`${d?"menaik":"menurun"} ${k}-${k}`;
+  return TX(`Apakah pola nombor ${sq.join(", ")}?`,lab(up,st),[lab(!up,st),lab(up,st+(st>5?-1:3))])},
+ bu:()=>{const n=R(100,999);return mk(`Bundarkan ${n} kepada puluh terdekat.`,rd(n,10),x=>x,10)},
+ br:()=>{const n=R(100,999);return mk(`Bundarkan ${n} kepada ratus terdekat.`,rd(n,100),x=>x,100)},
+ ta(){const a=R(100,500),b=R(50,400);return mk(`${a} + ▢ = ${a+b}`,b,x=>x,10)},
+ tb(){const a=R(300,900),b=R(50,250);return mk(`${a} − ▢ = ${a-b}`,b,x=>x,10)},
+ dr(){const a=R(11,40),b=R(2,9);return mk(`${a} × ${b} = ?`,a*b,x=>x,b)},
+ bh(){const d=R(2,9),q=R(20,150);return mk(`${q*d} ÷ ${d} = ?`,q,x=>x,1)},
+ df(){const a=R(11,70),b=R(2,9);return mk(`▢ × ${b} = ${a*b}`,a,x=>x,1)},
+ pe(){const d=R(3,10);let a=R(1,d-1),b=R(1,d-1);while(a===b)b=R(1,d-1);const big=R(0,1);return TX(`Manakah ${big?"lebih besar":"kurang"}, ${a}/${d} atau ${b}/${d}?`,`${big?Math.max(a,b):Math.min(a,b)}/${d}`,[`${big?Math.min(a,b):Math.max(a,b)}/${d}`])},
+ pp(){const n=R(11,99);return mk(`${n}/10 ditulis sebagai perpuluhan ialah…`,n,x=>(x/10).toFixed(1),1)},
+ pq(){const a=R(1,4),b=R(5,9),big=R(0,1);return TX(`Manakah lebih ${big?"besar":"kecil"}, 0.${a} atau 0.${b}?`,"0."+(big?b:a),["0."+(big?a:b)])},
+ wa(){const a=R(500,5000),b=R(100,3000);return mk(`${RM(a)} + ${RM(b)} = ?`,a+b,RM,10)},
+ wt(){const a=R(2000,6000),b=R(100,1900);return mk(`${RM(a)} − ${RM(b)} = ?`,a-b,RM,10)}
+};
+const SEC=[["🔢 Nombor",["nv","cr"]],["⚖️ Banding & Susun",["bk","bs","ss"]],["🔁 Pola & Bilang",["pl","pm","pb"]],["🎯 Bundar",["bu","br"]],["➕ Tambah/Tolak",["ta","tb"]],["✖️ Darab/Bahagi",["dr","bh","df"]],["🍕 Pecahan & Perpuluhan",["pe","pp","pq"]],["💰 Wang",["wa","wt"]]];
+const genAll=()=>SEC.flatMap(([n,ks])=>ks.map(k=>({sec:n,...G[k]()})));
+function newQ(){QZ=genAll();PK={};render()}
+function kuiz(v){
+  if(!QZ.length)QZ=genAll();
+  const by={};QZ.forEach((x,i)=>(by[x.sec]=by[x.sec]||[]).push(i));
+  H(v,`<h2>📝 Kuiz: 20 soalan mengikut bahagian</h2><div class="box y">Pilih jawapan yang betul. Setiap bahagian ada skor sendiri.</div>`);
+  SEC.forEach(([name])=>{const ids=by[name],got=ids.filter(i=>PK[i]===QZ[i].c).length,dn=ids.filter(i=>PK[i]!==undefined).length;
+    H(v,`<h2>${name} <small>(${dn===ids.length?got+"/"+ids.length:ids.length+" soalan"})</small></h2>`);
+    ids.forEach(i=>{const x=QZ[i],bx=document.createElement("div");bx.className="box";bx.innerHTML=`<b>${i+1}. ${x.q}</b><br>`;const r=document.createElement("div");r.className="opts";
+      x.o.forEach((t,j)=>{const b=btn(t,false,()=>{if(PK[i]===undefined){PK[i]=j;const y=scrollY;render();scrollTo(0,y)}});if(PK[i]!==undefined){b.disabled=true;if(j===x.c)b.classList.add("ok");else if(j===PK[i])b.classList.add("no")}r.append(b)});bx.append(r);v.append(bx)})});
+  const sc=QZ.filter((x,i)=>PK[i]===x.c).length,fin=Object.keys(PK).length===QZ.length,T=QZ.length;
+  H(v,`<div class="box c y"><div class="big">${fin?(sc>=16?"🏆":sc>=10?"👍":"📚"):"⭐"} ${sc} / ${T}</div>${fin?`<p>${sc>=16?"Syabas! Sangat bagus!":"Ulang baca bahagian yang masih lemah dan cuba lagi."}</p><div>${SEC.map(([n])=>{const ids=by[n],g=ids.filter(i=>PK[i]===QZ[i].c).length;return`<span class="chip ${g===ids.length?"ok":"no"}">${n} ${g}/${ids.length}</span>`}).join("")}</div>`:`<p>Dijawab: ${Object.keys(PK).length} / ${T}</p>`}</div>`);
+  const w=document.createElement("div");w.className="c";w.append(btn("🔄 Soalan baharu",false,newQ));v.append(w)}
+render();
+</script>
+</body>
+</html>

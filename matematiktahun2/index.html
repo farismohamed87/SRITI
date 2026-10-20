@@ -29,6 +29,7 @@ th{background:var(--yel)}.hl{background:#ffb199}.sm{background:#c9f5c9}
 .grp{display:inline-block;border:2px dashed var(--navy);border-radius:10px;padding:2px 6px;margin:4px;font-size:1.3rem}
 .ok{background:#bdf0cf!important}.no{background:#ffc6c0!important}
 .opts{display:flex;gap:8px;flex-wrap:wrap}
+.tile{display:inline-block;width:135px;text-align:center;border:3px solid var(--navy);border-radius:14px;padding:6px;margin:5px;background:#fff;font-weight:700}
 </style>
 </head>
 <body>
@@ -39,11 +40,11 @@ th{background:var(--yel)}.hl{background:#ffb199}.sm{background:#c9f5c9}
 <script>
 const $=s=>document.querySelector(s),H=(v,h)=>v.insertAdjacentHTML("beforeend",h);
 const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),sh=a=>a.sort(()=>Math.random()-.5);
-const TABS=[["nombor","🔢 Nombor"],["banding","⚖️ Banding & Susun"],["pola","🔁 Pola & Bilang"],["bundar","🎯 Bundar"],["tt","➕ Tambah/Tolak"],["db","✖️ Darab/Bahagi"],["pec","🍕 Pecahan"],["wang","💰 Wang"],["kuiz","📝 Kuiz"]];
+const TABS=[["nombor","🔢 Nombor"],["banding","⚖️ Banding & Susun"],["pola","🔁 Pola & Bilang"],["bundar","🎯 Bundar"],["tt","➕ Tambah/Tolak"],["db","✖️ Darab/Bahagi"],["pec","🍕 Pecahan"],["wang","💰 Wang"],["masa","🕒 Masa"],["ukuran","📏 Ukuran"],["bentuk","🔷 Bentuk"],["data","📊 Data"],["kuiz","📝 Kuiz"]];
 let tab="nombor";
 function btn(t,on,f){const b=document.createElement("button");b.innerHTML=t;if(on)b.className="on";b.onclick=f;return b}
 function render(){const n=$("#tabs");n.innerHTML="";TABS.forEach(([k,l])=>n.append(btn(l,tab===k,()=>{tab=k;render()})));
-  const v=$("#view");v.innerHTML="";({nombor,banding,pola,bundar,tt,db,pec,wang,kuiz})[tab](v)}
+  const v=$("#view");v.innerHTML="";({nombor,banding,pola,bundar,tt,db,pec,wang,masa,ukuran,bentuk,data,kuiz})[tab](v)}
 const num=(id,lo,hi)=>Math.max(lo,Math.min(hi,Math.round(+$(id).value||0)));
 
 // ---------- Nombor ----------
@@ -171,20 +172,87 @@ const G={
  wa(){const a=R(500,5000),b=R(100,3000);return mk(`${RM(a)} + ${RM(b)} = ?`,a+b,RM,10)},
  wt(){const a=R(2000,6000),b=R(100,1900);return mk(`${RM(a)} − ${RM(b)} = ?`,a-b,RM,10)}
 };
-const SEC=[["🔢 Nombor",["nv","cr"]],["⚖️ Banding & Susun",["bk","bs","ss"]],["🔁 Pola & Bilang",["pl","pm","pb"]],["🎯 Bundar",["bu","br"]],["➕ Tambah/Tolak",["ta","tb"]],["✖️ Darab/Bahagi",["dr","bh","df"]],["🍕 Pecahan & Perpuluhan",["pe","pp","pq"]],["💰 Wang",["wa","wt"]]];
+const SEC=[["🔢 Nombor",["nv","cr","nt"]],["⚖️ Banding & Susun",["bk","bs","ss"]],["🔁 Pola & Bilang",["pl","pm","pb"]],["🎯 Bundar",["bu","br","bz"]],["➕ Tambah/Tolak",["ta","tb","t3"]],["✖️ Darab/Bahagi",["dr","bh","df"]],["🍕 Pecahan & Perpuluhan",["pe","pp","pq"]],["💰 Wang",["wa","wt","wx"]],["🕒 Masa & Waktu",["ms1","ms2","ms3"]],["📏 Ukuran",["uk1","uk2","uk3"]],["🔷 Bentuk",["bn","bd","bp"]],["📊 Data",["dt","dg","dk"]]];
 const genAll=()=>SEC.flatMap(([n,ks])=>ks.map(k=>({sec:n,...G[k]()})));
 function newQ(){QZ=genAll();PK={};render()}
 function kuiz(v){
   if(!QZ.length)QZ=genAll();
   const by={};QZ.forEach((x,i)=>(by[x.sec]=by[x.sec]||[]).push(i));
-  H(v,`<h2>📝 Kuiz: 20 soalan mengikut bahagian</h2><div class="box y">Pilih jawapan yang betul. Setiap bahagian ada skor sendiri.</div>`);
+  H(v,`<h2>📝 Kuiz: 36 soalan (3 bagi setiap bahagian)</h2><div class="box y">Pilih jawapan yang betul. Setiap bahagian ada skor sendiri.</div>`);
   SEC.forEach(([name])=>{const ids=by[name],got=ids.filter(i=>PK[i]===QZ[i].c).length,dn=ids.filter(i=>PK[i]!==undefined).length;
     H(v,`<h2>${name} <small>(${dn===ids.length?got+"/"+ids.length:ids.length+" soalan"})</small></h2>`);
     ids.forEach(i=>{const x=QZ[i],bx=document.createElement("div");bx.className="box";bx.innerHTML=`<b>${i+1}. ${x.q}</b><br>`;const r=document.createElement("div");r.className="opts";
       x.o.forEach((t,j)=>{const b=btn(t,false,()=>{if(PK[i]===undefined){PK[i]=j;const y=scrollY;render();scrollTo(0,y)}});if(PK[i]!==undefined){b.disabled=true;if(j===x.c)b.classList.add("ok");else if(j===PK[i])b.classList.add("no")}r.append(b)});bx.append(r);v.append(bx)})});
   const sc=QZ.filter((x,i)=>PK[i]===x.c).length,fin=Object.keys(PK).length===QZ.length,T=QZ.length;
-  H(v,`<div class="box c y"><div class="big">${fin?(sc>=16?"🏆":sc>=10?"👍":"📚"):"⭐"} ${sc} / ${T}</div>${fin?`<p>${sc>=16?"Syabas! Sangat bagus!":"Ulang baca bahagian yang masih lemah dan cuba lagi."}</p><div>${SEC.map(([n])=>{const ids=by[n],g=ids.filter(i=>PK[i]===QZ[i].c).length;return`<span class="chip ${g===ids.length?"ok":"no"}">${n} ${g}/${ids.length}</span>`}).join("")}</div>`:`<p>Dijawab: ${Object.keys(PK).length} / ${T}</p>`}</div>`);
+  H(v,`<div class="box c y"><div class="big">${fin?(sc>=T*.8?"🏆":sc>=T/2?"👍":"📚"):"⭐"} ${sc} / ${T}</div>${fin?`<p>${sc>=T*.8?"Syabas! Sangat bagus!":"Ulang baca bahagian yang masih lemah dan cuba lagi."}</p><div>${SEC.map(([n])=>{const ids=by[n],g=ids.filter(i=>PK[i]===QZ[i].c).length;return`<span class="chip ${g===ids.length?"ok":"no"}">${n} ${g}/${ids.length}</span>`}).join("")}</div>`:`<p>Dijawab: ${Object.keys(PK).length} / ${T}</p>`}</div>`);
   const w=document.createElement("div");w.className="c";w.append(btn("🔄 Soalan baharu",false,newQ));v.append(w)}
+// ---------- Bahagian baharu: Masa, Ukuran, Bentuk, Data ----------
+const pad=n=>String(n).padStart(2,"0");
+const sv=(c,w=90)=>`<svg viewBox="0 0 100 100" width="${w}" height="${w}" stroke="#1c3f77" stroke-width="3" stroke-linejoin="round">${c}</svg>`;
+function tally(n){let x=4,s="";for(let i=0;i<n;i+=5){const k=Math.min(5,n-i);for(let j=0;j<Math.min(k,4);j++)s+=`<line x1="${x+j*9}" y1="4" x2="${x+j*9}" y2="40"/>`;if(k===5)s+=`<line x1="${x-4}" y1="34" x2="${x+40}" y2="10"/>`;x+=56}
+  return `<svg width="${Math.max(x,10)}" height="44" style="vertical-align:middle" stroke="#1c3f77" stroke-width="4" stroke-linecap="round">${s}</svg>`}
+const SH={"Segi empat tepat":[2,'<rect x="8" y="28" width="84" height="44" fill="#ffd21a"/>'],"Segi empat sama":[2,'<rect x="22" y="22" width="56" height="56" fill="#7ed957"/>'],"Segi tiga":[2,'<polygon points="50,14 90,84 10,84" fill="#ff8591"/>'],"Bulatan":[2,'<circle cx="50" cy="50" r="38" fill="#5bdfe6"/>'],
+"Kubus":[3,'<polygon points="18,38 36,20 82,20 64,38" fill="#fff0a8"/><polygon points="64,38 82,20 82,66 64,84" fill="#e0a800"/><rect x="18" y="38" width="46" height="46" fill="#ffd21a"/>'],
+"Kuboid":[3,'<polygon points="8,44 28,26 94,26 74,44" fill="#c9f5c9"/><polygon points="74,44 94,26 94,62 74,80" fill="#4caf50"/><rect x="8" y="44" width="66" height="36" fill="#7ed957"/>'],
+"Piramid":[3,'<polygon points="50,12 12,76 52,90" fill="#ffb199"/><polygon points="50,12 52,90 90,70" fill="#e5533d"/>'],
+"Silinder":[3,'<path d="M20 26v48a30 11 0 0 0 60 0V26" fill="#b5d8ff"/><ellipse cx="50" cy="26" rx="30" ry="11" fill="#e3f1ff"/>'],
+"Kon":[3,'<path d="M50 10L18 76a32 12 0 0 0 64 0z" fill="#e6a3fc"/>']};
+// Masa
+let CK={h:3,m:15};
+function masa(v){const o=(n,f,sel)=>Array.from({length:n},(_,i)=>f(i)).map(x=>`<option ${x===sel?"selected":""}>${x}</option>`).join("");
+  H(v,`<h2>Masa dan waktu</h2><div class="box c"><div id="clk"></div>Jam: <select id="ch" onchange="ck()" style="width:75px">${o(12,i=>i+1,CK.h)}</select> Minit: <select id="cm" onchange="ck()" style="width:75px">${o(12,i=>i*5,CK.m)}</select><div id="ct"></div></div>
+  <div class="box y"><b>JARUM</b><br>Jarum pendek = jarum jam<br>Jarum panjang = jarum minit</div>
+  <div class="box y"><b>SAAT</b><br>1 senggatan = 1 saat<br>1 pusingan lengkap jam = 60 saat = 1 minit</div>
+  <div class="box y"><b>MINIT</b><br>1 minit = 60 saat · Suku jam = 15 minit · Setengah jam = 30 minit<br>1 pusingan lengkap jam = 60 minit = 1 jam<br>Kiraan minit = sifir 5 (5, 10, 15 … 60)</div>
+  <div class="box y"><b>JAM</b><br>1 jam = 60 minit<br>1 pusingan lengkap jam = 12 jam = setengah hari<br>2 pusingan lengkap jam = 24 jam = 1 hari</div>`);ck()}
+function ck(){const h=+$("#ch").value,m=+$("#cm").value;CK={h,m};const P=(a,r)=>[110+r*Math.sin(a*Math.PI/180),110-r*Math.cos(a*Math.PI/180)];
+  let t=`<svg viewBox="0 0 220 220" width="250"><circle cx="110" cy="110" r="104" fill="#fff" stroke="#1c3f77" stroke-width="5"/>`;
+  for(let i=1;i<=12;i++){const[x,y]=P(i*30,76),[a,b]=P(i*30,93);t+=`<text x="${x}" y="${y+6}" text-anchor="middle" font-weight="800" font-size="19" fill="#1c3f77">${i}</text><text x="${a}" y="${b+3}" text-anchor="middle" font-size="9" font-weight="700" fill="#ff7a00">${i*5}</text>`}
+  const[a,b]=P((h%12+m/60)*30,48),[c,d]=P(m*6,70);
+  t+=`<line x1="110" y1="110" x2="${a}" y2="${b}" stroke="#e53935" stroke-width="8" stroke-linecap="round"/><line x1="110" y1="110" x2="${c}" y2="${d}" stroke="#1976d2" stroke-width="4" stroke-linecap="round"/><circle cx="110" cy="110" r="6" fill="#1c3f77"/></svg>`;
+  $("#clk").innerHTML=t;$("#ct").innerHTML=`<p class="big">${h}:${pad(m)}</p><p><span style="color:#e53935"><b>Jarum pendek</b></span> menunjuk ke ${h} (jam)<br><span style="color:#1976d2"><b>Jarum panjang</b></span> menunjuk ke ${m/5||12} → ${m/5||12} × 5 = ${m||60} minit${m===15?" (suku jam)":m===30?" (setengah jam)":m===0?" (tepat)":""}</p>`}
+// Ukuran
+const UKS=[["📏 Panjang","m","meter","cm","sentimeter",100],["⚖️ Jisim","kg","kilogram","g","gram",1000],["🥛 Isi padu cecair","l","liter","ml","mililiter",1000]];let UI=0,AB=20;
+function ukuran(v){const[,a,aw,b,bw,f]=UKS[UI],cap=x=>x[0].toUpperCase()+x.slice(1),tb=document.createElement("div");tb.className="c";UKS.forEach((x,i)=>tb.append(btn(x[0],i===UI,()=>{UI=i;render()})," "));v.append(tb);
+  H(v,`<div class="box y c"><b>${cap(aw)} = ${a} &nbsp;|&nbsp; ${cap(bw)} = ${b}</b><br><b>1 ${a} = ${f} ${b}</b> (${a} lagi besar daripada ${b})<div style="display:flex;margin:10px 0;border:3px solid var(--navy)">${Array.from({length:10},(_,i)=>`<div style="flex:1;padding:8px 0;background:${i%2?"#ffe680":"#ffd21a"};font-weight:700;font-size:.75rem">${f/10} ${b}</div>`).join("")}</div>10 bahagian × ${f/10} ${b} = 1 ${a}</div>
+  <div class="box c">Nombor: <input id="un" type="number" value="18" oninput="uk()"> <select id="uu" onchange="uk()" style="width:90px"><option>${a}</option><option>${b}</option></select><div id="uo" class="big"></div></div>
+  <h2>Anggar lebih atau kurang</h2><div class="box y"><b>Kurang daripada</b> = sikit daripada yang lain<br><b>Lebih daripada</b> = banyak daripada yang lain<br><b>Lebih kurang</b> = seperti / sama dengan</div>
+  <div class="box"><b>Reben A = 10 cm</b><div style="background:#ff3b30;height:26px;width:33.3%;margin:4px 0 10px"></div><b>Reben B = <span id="bl"></span> cm</b> (gerakkan peluncur)<div id="bw" style="background:#ff3b30;height:26px;margin:4px 0"></div><input type="range" min="3" max="30" value="${AB}" oninput="AB=+this.value;ag()" style="width:100%;border:0"><p id="bt" class="c"></p></div>`);uk();ag()}
+function uk(){const n=num("#un",0,999),s=$("#uu").value,[,a,aw,,bw]=UKS[UI];$("#uo").textContent=`${n} ${s} = ${n} ${s===a?aw:bw}`}
+function ag(){$("#bl").textContent=AB;$("#bw").style.width=AB/30*100+"%";$("#bt").innerHTML=`<b>Panjang reben B <span style="color:#2e8b00">${Math.abs(AB-10)<=1?"lebih kurang":AB>10?"lebih daripada":"kurang daripada"}</span> 10 cm</b><br>Anggaran: lebih kurang ${Math.round(AB/10)*10} cm`}
+// Bentuk
+function bentuk(v){const K=Object.keys(SH),card=n=>`<div class="tile">${sv(SH[n][1])}<br>${n}</div>`;
+  H(v,`<h2>Bentuk 2D (2 dimensi)</h2><div class="box c"><b>1 permukaan sahaja</b><br>${K.filter(n=>SH[n][0]===2).map(card).join("")}<br><small>Rujuk Buku Teks Jilid 2 ms 89 – ms 92</small></div>
+  <h2>Bentuk 3D (3 dimensi)</h2><div class="box c"><b>Lebih dari 1 permukaan</b><br>${K.filter(n=>SH[n][0]===3).map(card).join("")}<br><small>Rujuk Buku Teks Jilid 2 ms 83 – ms 88</small></div>
+  <h2>🎮 2D atau 3D?</h2><div class="box c" id="bgm"></div>`);bg()}
+function bg(){const K=Object.keys(SH),n=K[R(0,K.length-1)],e=$("#bgm");e.innerHTML=`${sv(SH[n][1],110)}<p class="big">${n}</p><p id="bgr">Pilih jawapan:</p>`;
+  ["2D","3D"].forEach(d=>e.append(btn(d,false,()=>{const ok=SH[n][0]===+d[0];$("#bgr").innerHTML=ok?`✅ Betul! ${n} ialah ${d}`:"❌ Cuba lagi";if(ok)setTimeout(bg,1000)})," "))}
+// Data
+let DT=[3,5,8],DN=0;
+function data(v){H(v,`<h2>Data: cara gundal</h2><div class="box y"><b>Palang yang kelima akan disengetkan.</b><br>4 = ${tally(4)} &nbsp; 5 = ${tally(5)} &nbsp; 8 = ${tally(8)} &nbsp; 12 = ${tally(12)}<br><small>Rujuk Buku Teks ms 97 – ms 103</small></div><div class="box c"><b>Tekan + untuk menggundal</b><div id="dg"></div></div><div class="box c" id="dq"></div>`);dgr();dnew()}
+function dgr(){const e=$("#dg");e.innerHTML="";["🍎","🍌","🍇"].forEach((f,i)=>{const r=document.createElement("div");r.style.cssText="margin:8px 0;display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap";r.innerHTML=`<span class="big">${f}</span>`;
+  r.append(btn("−",false,()=>{DT[i]=Math.max(0,DT[i]-1);dgr()}),btn("+",false,()=>{DT[i]++;dgr()}));H(r,`<span>${tally(DT[i])}</span><b class="big">${DT[i]}</b>`);e.append(r)})}
+function dnew(){DN=R(2,14);const e=$("#dq");e.innerHTML=`<b>Berapakah bilangan gundal ini?</b><div style="margin:8px">${tally(DN)}</div><input id="da" type="number"> <span id="dr2"></span><br>`;
+  e.append(btn("Semak",false,()=>{$("#dr2").innerHTML=+$("#da").value===DN?"✅ Betul!":"❌ Cuba lagi (kira 5, 10, 15 …)"})," ",btn("Soalan baharu",false,dnew))}
+// Penjana soalan baharu
+Object.assign(G,{
+ nt(){const d=sh([1,2,3,4,5,6,7,8,9]),n=d[0]*100+d[1]*10+d[2],i=R(0,2),P=["Ratus","Puluh","Sa"];return TX(`Apakah nilai tempat bagi digit ${d[i]} dalam nombor ${n}?`,P[i],P.filter((_,j)=>j!==i))},
+ t3(){const a=R(100,500),b=R(2,4)*50,c=R(1,9)*10;return mk(`${a} + ${b} − ${c} = ?`,a+b-c,x=>x,10)},
+ wx(){if(R(0,1)){const a=R(5,40)*50,k=R(2,5);return mk(`${RM(a)} × ${k} = ?`,a*k,RM,50)}const d=R(2,4),q=R(100,400);return mk(`RM${q*d} ÷ ${d} = ?`,q*100,RM,100)},
+ ms3(){const k=R(1,11);return TX(`Jarum panjang menunjuk ke ${k}. Berapa minit?`,k*5,sh([5,10,15,20,25,30,35,40,45,50,55].filter(x=>x!==k*5)).slice(0,2))},
+ uk3(){const P=[["m","cm"],["kg","g"],["l","ml"]][R(0,2)],o=R(0,1)?P:[P[1],P[0]];return TX(`Yang manakah lebih besar, ${o[0]} atau ${o[1]}?`,P[0],[P[1]])},
+ bd(){const K=Object.keys(SH),n=K[R(0,K.length-1)];return TX(`${n} ialah bentuk …`,SH[n][0]+"D",[SH[n][0]===2?"3D":"2D"])},
+ bp(){const t=R(2,3);return TX(`Bentuk ${t}D mempunyai …`,t===2?"1 permukaan sahaja":"lebih dari 1 permukaan",[t===2?"lebih dari 1 permukaan":"1 permukaan sahaja"])},
+ dg(){const n=R(4,12);return TX(`Manakah gundal bagi ${n}?`,tally(n),[tally(n+1),tally(n-1)])},
+ dk(){return R(0,1)?TX("Palang yang kelima dalam gundal ditulis dengan cara …","disengetkan",["ditegakkan","dibulatkan"]):TX("Satu kumpulan gundal yang lengkap (palang kelima disengetkan) bernilai …",5,[4,10])},
+ bb:()=>bk(R(0,1)),bz:()=>R(0,1)?G.bu():G.br(),pd:()=>R(0,1)?G.pp():G.pq(),wg:()=>R(0,1)?G.wa():G.wt(),
+ ms1(){const F=[["Setengah jam = berapa minit?",30],["Suku jam = berapa minit?",15],["1 jam = berapa minit?",60],["1 minit = berapa saat?",60],["1 hari = berapa jam?",24],["1 pusingan lengkap jam pendek = berapa jam?",12]],[q,a]=F[R(0,5)];return TX(q,a,sh([15,30,60,12,24].filter(x=>x!==a)).slice(0,2))},
+ ms2(){const h=R(1,12),k=R(1,12),m=k*5%60,a=`${h}:${pad(m)}`,w=[...new Set([`${k}:${pad(h*5%60)}`,`${h}:${pad((m+30)%60)}`,`${h%12+1}:${pad(m)}`].filter(x=>x!==a))].slice(0,2);return TX(`Jarum pendek menunjuk ke ${h}. Jarum panjang menunjuk ke ${k}. Pukul berapa?`,a,w)},
+ uk1(){const U=[["cm","sentimeter"],["m","meter"],["kg","kilogram"],["g","gram"],["l","liter"],["ml","mililiter"]],i=R(0,5),n=R(2,60);return TX(`${n} ${U[i][0]} = ${n} ?`,U[i][1],sh(U.filter((_,j)=>j!==i)).slice(0,2).map(x=>x[1]))},
+ uk2(){const[q,a]=[["1 m = ? cm",100],["1 kg = ? g",1000],["1 l = ? ml",1000]][R(0,2)];return TX(q,a,a===100?[10,1000]:[100,10])},
+ bn(){const K=Object.keys(SH),n=K[R(0,K.length-1)];return TX(`${sv(SH[n][1],70)}<br>Apakah nama bentuk ini?`,n,sh(K.filter(x=>x!==n&&SH[x][0]===SH[n][0])).slice(0,2))},
+ dt(){const n=R(3,14);return mk(`Berapakah bilangan gundal ini? ${tally(n)}`,n,x=>x,1)}
+});
 render();
 </script>
 </body>
