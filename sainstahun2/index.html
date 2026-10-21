@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ms"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Booster Sains Tahun 2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@600;800&display=swap">
+<style>
+:root{--bg:#fff8e7;--card:#fff;--ink:#1d2b4f;--mute:#5b6786;--line:#e6dcc0;--ok:#1f9d55;--bad:#d64545;--c:#6c3fc5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#171a2b;--card:#232845;--ink:#f3f1ff;--mute:#aeb4d4;--line:#383e66}}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:600 17px/1.5 Nunito,system-ui,sans-serif}
+h1,h2,h3,.b{font-family:'Baloo 2',Nunito,sans-serif;margin:0;line-height:1.15}
+main{max-width:760px;margin:0 auto;padding:16px 16px 48px}
+button{font:inherit;cursor:pointer;border:0;color:inherit}
+button:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.hero{display:flex;align-items:center;gap:14px;margin:8px 0 18px}
+.hero .em{font-size:52px}.hero h1{font-size:clamp(28px,7vw,40px);font-weight:800}
+.hero p{margin:2px 0 0;color:var(--mute);font-size:15px}
+.bar{height:12px;background:var(--line);border-radius:9px;overflow:hidden;margin:6px 0 20px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#ffb703,#ff6b6b);width:0;transition:width .5s}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.u{background:var(--card);border:3px solid var(--k);border-radius:22px;padding:14px;text-align:left;display:flex;flex-direction:column;gap:4px;min-height:132px;box-shadow:0 5px 0 var(--k)}
+.u:active{transform:translateY(3px);box-shadow:0 2px 0 var(--k)}
+.u .em{font-size:34px}.u h3{font-size:18px;font-weight:700;color:var(--ink)}.u small{color:var(--mute);margin-top:auto}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.back{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:8px 14px;font-weight:800}
+.top h2{font-size:26px;flex:1}
+.tabs{display:flex;gap:8px;margin-bottom:16px}
+.tabs button{flex:1;padding:11px;border-radius:16px;background:var(--card);border:2px solid var(--line);font-weight:800}
+.tabs button[aria-selected=true]{background:var(--k);border-color:var(--k);color:#fff}
+.fc{display:grid;gap:12px}
+.fl{background:var(--card);border:3px solid var(--k);border-radius:20px;padding:16px;text-align:left;width:100%;min-height:92px}
+.fl .t{display:flex;gap:10px;align-items:center;font:800 20px 'Baloo 2',sans-serif}
+.fl .t span{font-size:30px}.fl .d{margin-top:8px;color:var(--ink)}.fl .h{color:var(--mute);font-size:14px;margin-top:6px}
+.fl.o{background:color-mix(in srgb,var(--k) 14%,var(--card))}
+.q{background:var(--card);border-radius:22px;padding:18px;border:3px solid var(--k)}
+.q .n{color:var(--mute);font-size:14px}.q h3{font-size:22px;margin:6px 0 14px}
+.opt{display:block;width:100%;text-align:left;background:var(--bg);border:3px solid var(--line);border-radius:16px;padding:13px 15px;margin-bottom:10px;font-weight:800}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 20%,var(--card))}
+.opt.no{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 18%,var(--card))}
+.fb{min-height:26px;font-weight:800;margin:4px 0 10px}
+.go{background:var(--k);color:#fff;border-radius:16px;padding:12px 22px;font-weight:800;font-size:18px}
+.res{text-align:center;background:var(--card);border:3px solid var(--k);border-radius:24px;padding:26px}
+.res .st{font-size:46px;letter-spacing:4px}.res h2{font-size:30px;margin:6px 0}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.go.alt{background:var(--card);color:var(--ink);border:3px solid var(--line)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><main id="app"></main>
+<script>
+var U=[
+{n:"Kemahiran Saintifik",e:"🔬",c:"#2b7de9",notes:[["Memerhati","👀","Guna deria untuk mengumpul maklumat: mata, telinga, hidung, lidah dan kulit."],["Mengelas","📦","Mengumpulkan objek mengikut ciri yang sama. Ini memudahkan kita menyusun maklumat."],["Mengukur dan menggunakan nombor","📏","Guna alat yang sesuai: pembaris, penimbang dan jam untuk mengukur panjang, berat dan masa."],["Berkomunikasi","💬","Menyampaikan maklumat kepada orang lain dengan bercakap, menulis, melukis dan membuat jadual."],["Sikap saintifik","🤝","Berhati-hati, bertanggungjawab, jujur dan bekerjasama."]],
+q:[["Alat apakah yang digunakan untuk mengukur berat?","Penimbang","Pembaris","Jam"],["Kita menggunakan hidung untuk…","mencium bau","melihat warna","mendengar bunyi"],["Mengumpulkan objek mengikut ciri yang sama dipanggil…","mengelas","memerhati","berkomunikasi"],["Yang manakah cara berkomunikasi?","Melukis","Menimbang","Mencium"]]},
+{n:"Peraturan Bilik Sains",e:"🧪",c:"#2e9e5b",notes:[["Kepentingan peraturan","🛡️","Peraturan dipatuhi untuk menjaga keselamatan, mengelakkan kemalangan dan menjaga kebersihan."],["Pembuangan sisa","🗑️","Sisa pepejal dibuang dalam bakul sampah. Sisa cecair dibuang dalam sinki."],["Laporkan kemalangan","🩹","Beritahu guru jika ada murid cedera, alat pecah atau berlaku kemalangan."],["Simbol amaran bahaya","⚠️","Contoh: mudah terbakar, toksik, mudah meletup dan berbahaya."]],
+q:[["Sisa cecair dibuang di mana?","Dalam sinki","Dalam bakul sampah","Di atas meja"],["Jika alat sains pecah, apakah yang perlu dibuat?","Beritahu guru","Sorokkan alat itu","Teruskan bermain"],["Simbol tengkorak bermaksud…","toksik","mudah terbakar","mudah meletup"],["Barang yang dibenarkan dibawa ke bilik sains ialah…","buku sains","mainan","makanan ringan"]]},
+{n:"Manusia",e:"👨‍👩‍👧",c:"#e0559a",notes:[["Manusia membiak","🤱","Manusia membiak dengan melahirkan anak."],["Peringkat tumbesaran","📈","Bayi, kanak-kanak, remaja, dewasa. Setiap peringkat ada perubahan tertentu."],["Pewarisan","🧬","Anak mewarisi ciri daripada ibu bapa: warna iris mata, jenis rambut dan warna kulit."],["Penjagaan diri","🍎","Makan makanan sihat, tidur yang cukup, bersenam dan menjaga kebersihan."]],
+q:[["Manusia membiak dengan cara…","melahirkan anak","bertelur","bercambah"],["Selepas peringkat bayi ialah…","kanak-kanak","dewasa","remaja"],["Ciri manakah yang diwarisi?","Warna kulit","Pakaian","Nama sekolah"],["Semasa membesar, manusia bertambah…","tinggi dan berat","warna mata","bilangan jari"]]},
+{n:"Haiwan",e:"🐾",c:"#f08a00",notes:[["Cara haiwan membiak","🥚","Haiwan bertelur atau melahirkan anak. Pembiakan membantu haiwan meneruskan kehidupan."],["Bertelur dan melahirkan","🐣","Bertelur: ikan, katak, ayam, penyu, penguin. Melahirkan anak: kucing, arnab, gajah, panda."],["Anak tidak serupa induk","🦋","Katak, rama-rama, nyamuk dan kumbang kura-kura berubah bentuk semasa membesar."],["Kitar hidup katak","🐸","Telur → berudu → anak katak → katak dewasa."],["Penjagaan haiwan","🐶","Beri makanan, minuman, kebersihan, tempat perlindungan dan kasih sayang."]],
+q:[["Haiwan manakah melahirkan anak?","Kucing","Ayam","Penyu"],["Yang manakah anaknya serupa dengan induk?","Lembu","Katak","Rama-rama"],["Selepas telur katak menetas, ia menjadi…","berudu","katak dewasa","ulat"],["Haiwan manakah bertelur?","Penguin","Gajah","Panda"]]},
+{n:"Tumbuh-tumbuhan",e:"🌱",c:"#4aa32f",notes:[["Kepentingan","🌳","Tumbuhan ialah habitat haiwan, memberi udara untuk bernafas, makanan dan ubat."],["Biji benih bercambah","💧","Biji benih memerlukan air, udara dan suhu yang sesuai."],["Keperluan asas tumbuhan","☀️","Tumbuhan memerlukan air, udara, cahaya matahari dan nutrien."],["Urutan tumbesaran","🌸","Biji benih → bercambah → anak pokok → pokok berbunga → pokok berbuah."]],
+q:[["Keperluan asas tumbuhan ialah…","air, udara, cahaya matahari dan nutrien","air sahaja","gula dan garam"],["Apakah yang berlaku selepas biji benih bercambah?","Anak pokok","Pokok berbuah","Biji benih"],["Biji benih memerlukan…untuk bercambah","air, udara dan suhu sesuai","cahaya lampu","baja sahaja"],["Cara menjaga tumbuhan ialah…","menyiram setiap hari","membiarkan di tempat gelap","memetik daun"]]},
+{n:"Terang dan Gelap",e:"💡",c:"#e6a700",notes:[["Cahaya","☀️","Cahaya membantu kita melihat. Tanpa cahaya, keadaan menjadi gelap."],["Sumber cahaya","🔦","Semula jadi: matahari. Buatan manusia: lampu suluh, lampu rumah dan lilin."],["Bayang-bayang","🐇","Bayang-bayang terhasil apabila cahaya dihalang oleh objek."],["Kejelasan bayang-bayang","🧸","Cahaya dekat, bayang-bayang lebih jelas. Cahaya jauh, bayang-bayang kurang jelas."]],
+q:[["Sumber cahaya semula jadi ialah…","matahari","lilin","lampu suluh"],["Bayang-bayang terhasil apabila cahaya…","dihalang oleh objek","menembusi kaca","dimatikan"],["Apakah yang kita perlukan semasa gelap?","Sumber cahaya","Payung","Kipas"],["Cahaya dekat, bayang-bayang akan…","lebih jelas","hilang","kurang jelas"]]},
+{n:"Elektrik",e:"⚡",c:"#7a46d6",notes:[["Komponen elektrik","🔋","Sel kering membekalkan tenaga. Mentol mengeluarkan cahaya. Suis menyambung dan memutuskan litar."],["Litar lengkap","💡","Suis ditutup, arus mengalir dan mentol menyala."],["Litar tidak lengkap","🔌","Suis terbuka, arus tidak mengalir dan mentol tidak menyala."],["Konduktor dan penebat","🥄","Konduktor membenarkan arus mengalir: sudu logam, duit syiling, paku. Penebat tidak: plastik, getah, kain."],["Keselamatan","🧤","Jangan sentuh suis dengan tangan basah dan jangan bermain dengan wayar elektrik."]],
+q:[["Fungsi sel kering ialah…","membekalkan tenaga elektrik","mengeluarkan cahaya","memutuskan litar"],["Mentol menyala apabila litar…","lengkap","terbuka","tiada sel kering"],["Yang manakah konduktor?","Paku","Getah","Plastik"],["Yang manakah penebat?","Kain","Sudu logam","Duit syiling"]]},
+{n:"Campuran",e:"🥣",c:"#14a3a8",notes:[["Apa itu campuran?","🍵","Gabungan dua atau lebih bahan, contohnya teh dan hampas teh. Bahan boleh diasingkan."],["Kaedah mengasingkan","🧲","Menyisih (tangan), mengayak (halus dan kasar), menuras (pepejal daripada cecair), magnet dan mengapung."],["Bahan larut","🧂","Larut: gula dan garam. Tidak larut: batu dan pasir."],["Larut dengan cepat","♨️","Guna air panas, kacau dan guna bahan bersaiz kecil."]],
+q:[["Kaedah untuk mengasingkan klip kertas dan pasir ialah…","menggunakan magnet","menuras","mengayak"],["Air teh dan hampas teh diasingkan dengan…","menuras","menyisih","mengapung"],["Yang manakah larut dalam air?","Gula","Pasir","Batu"],["Bahan larut lebih cepat dalam…","air panas","air sejuk","tanpa air"]]},
+{n:"Bumi: Air dan Udara",e:"🌍",c:"#1b8fd8",notes:[["Sumber air","🏞️","Hujan, sungai, laut, tasik dan mata air."],["Arah aliran air","⛰️","Air mengalir dari tempat tinggi ke tempat rendah."],["Kitaran air","☁️","Matahari memanaskan air → wap air → awan → hujan → air kembali ke sungai, laut dan tasik."],["Udara dan angin","🌬️","Udara ialah campuran gas seperti oksigen dan karbon dioksida. Udara yang bergerak ialah angin."],["Kegunaan dan bahaya angin","⛵","Menggerakkan kapal layar, memutarkan kincir angin dan menerbangkan layang-layang. Angin kencang boleh menyebabkan ribut dan taufan."]],
+q:[["Air mengalir dari…","tempat tinggi ke tempat rendah","tempat rendah ke tempat tinggi","kiri ke kanan sahaja"],["Udara yang bergerak dipanggil…","angin","awan","hujan"],["Manusia dan haiwan memerlukan…untuk bernafas","oksigen","air","pasir"],["Selepas wap air membentuk awan, apa berlaku?","Hujan turun","Air membeku","Matahari terbit"]]},
+{n:"Teknologi",e:"🧩",c:"#e5483f",notes:[["Set binaan","🧰","Set komponen untuk membina pelbagai model. Ada pelbagai bentuk, warna dan manual bergambar."],["Bentuk komponen","🔷","Kiub (blok empat segi), prisma (segi tiga) dan silinder (bulat panjang)."],["Manual bergambar","📖","Panduan memasang set binaan dengan betul dan teratur."],["Cara membina model","🏗️","Pilih komponen, cantumkan, ikut manual bergambar, pastikan binaan kukuh."],["Simpan dengan baik","📦","Simpan set binaan dengan kemas, teratur dan selamat supaya tahan lama."]],
+q:[["Panduan memasang set binaan dipanggil…","manual bergambar","buku cerita","peta"],["Blok empat segi berbentuk…","kiub","silinder","prisma"],["Selepas digunakan, set binaan perlu…","disimpan dengan kemas","dibiarkan bertaburan","dibuang"],["Kita boleh membina model baharu menggunakan…","idea sendiri","wang syiling","air sahaja"]]}
+];
+var P={};try{P=JSON.parse(localStorage.getItem("bs2")||"{}")}catch(e){}
+function save(){try{localStorage.setItem("bs2",JSON.stringify(P))}catch(e){}}
+var app=document.getElementById("app");
+function sh(a){return a.map(function(x){return[Math.random(),x]}).sort(function(a,b){return a[0]-b[0]}).map(function(x){return x[1]})}
+function stars(n){return "⭐".repeat(n)+"☆".repeat(4-n)}
+function home(){
+ var done=0;U.forEach(function(u,i){if(P[i]>=3)done++});
+ var h='<div class="hero"><div class="em">🧑‍🔬</div><div><h1>Booster Sains Tahun 2</h1><p>Pilih unit, baca nota, kemudian jawab kuiz.</p></div></div>';
+ h+='<div class="b" style="font-weight:700">'+done+' / 10 unit dikuasai</div><div class="bar"><i style="width:'+done*10+'%"></i></div><div class="grid">';
+ U.forEach(function(u,i){h+='<button class="u" style="--k:'+u.c+'" onclick="unit('+i+')"><span class="em">'+u.e+'</span><h3>Unit '+(i+1)+': '+u.n+'</h3><small>'+(P[i]!=null?stars(P[i]):"Belum cuba")+'</small></button>'});
+ app.innerHTML=h+'</div>';window.scrollTo(0,0);
+}
+function unit(i,tab){
+ tab=tab||"nota";var u=U[i];
+ var h='<div style="--k:'+u.c+'"><div class="top"><button class="back" onclick="home()">Kembali</button><h2>'+u.e+' '+u.n+'</h2></div>';
+ h+='<div class="tabs" role="tablist"><button role="tab" aria-selected="'+(tab=="nota")+'" onclick="unit('+i+',\'nota\')">Nota</button><button role="tab" aria-selected="'+(tab=="kuiz")+'" onclick="unit('+i+',\'kuiz\')">Kuiz</button></div>';
+ app.innerHTML=h+'<div id="body"></div></div>';window.scrollTo(0,0);
+ tab=="nota"?notes(i):quiz(i);
+}
+function notes(i){
+ var u=U[i],b=document.getElementById("body");
+ var h='<p style="color:var(--mute);margin:0 0 12px">Ketik kad untuk membaca penerangan.</p><div class="fc">';
+ u.notes.forEach(function(n){h+='<button class="fl" aria-expanded="false" onclick="this.classList.toggle(\'o\');this.setAttribute(\'aria-expanded\',this.classList.contains(\'o\'));this.querySelector(\'.d\').hidden=!this.classList.contains(\'o\')"><div class="t"><span>'+n[1]+'</span>'+n[0]+'</div><div class="d" hidden>'+n[2]+'</div></button>'});
+ b.innerHTML=h+'</div><div class="row"><button class="go" onclick="unit('+i+',\'kuiz\')">Mula kuiz</button></div>';
+}
+function quiz(i){
+ var u=U[i],b=document.getElementById("body"),qs=sh(u.q),k=0,s=0,lock=false;
+ function show(){
+  var q=qs[k],o=sh(q.slice(1));lock=false;
+  var h='<div class="q"><div class="n">Soalan '+(k+1)+' daripada '+qs.length+'</div><h3>'+q[0]+'</h3>';
+  o.forEach(function(t){h+='<button class="opt">'+t+'</button>'});
+  b.innerHTML=h+'<div class="fb" aria-live="polite"></div><div id="nx"></div></div>';
+  var bs=b.querySelectorAll(".opt");
+  bs.forEach(function(el){el.onclick=function(){
+   if(lock)return;lock=true;var r=el.textContent===q[1];
+   if(r){s++;el.classList.add("ok")}else{el.classList.add("no");bs.forEach(function(x){if(x.textContent===q[1])x.classList.add("ok")})}
+   b.querySelector(".fb").textContent=r?"Betul! Bagus!":"Belum tepat. Jawapan betul: "+q[1];
+   b.querySelector("#nx").innerHTML='<button class="go">'+(k<qs.length-1?"Soalan seterusnya":"Lihat keputusan")+'</button>';
+   b.querySelector("#nx button").onclick=function(){k++;k<qs.length?show():end()};
+  }});
+ }
+ function end(){
+  if(P[i]==null||s>P[i])P[i]=s;save();
+  var m=s==4?"Hebat sekali!":s>=3?"Bagus! Unit ini dikuasai.":s>=2?"Hampir berjaya. Cuba lagi!":"Jangan putus asa. Baca nota dan cuba semula.";
+  b.innerHTML='<div class="res"><div class="st">'+stars(s)+'</div><h2>'+s+' / '+qs.length+'</h2><p>'+m+'</p><div class="row"><button class="go" id="r">Cuba lagi</button><button class="go alt" id="n">Baca nota</button><button class="go alt" id="h">Semua unit</button></div></div>';
+  document.getElementById("r").onclick=function(){unit(i,"kuiz")};
+  document.getElementById("n").onclick=function(){unit(i,"nota")};
+  document.getElementById("h").onclick=home;
+ }
+ show();
+}
+home();
+</script></body></html>
